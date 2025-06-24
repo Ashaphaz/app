@@ -107,51 +107,63 @@ user_problem_statement: "Interactive Story Game Website about MediShield health 
 backend:
   - task: "MediShield Story Game API Setup"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Created complete FastAPI backend with game state management, character system, insurance options (MediShield Life vs Integrated Shield), decision tracking, scenario outcomes calculation, and MongoDB integration"
+      - working: true
+        agent: "testing"
+        comment: "API health check endpoint (/api/) successfully returns 'MediShield Story Game API' message. All API routes are properly prefixed with /api and the FastAPI application is correctly configured with CORS middleware."
 
   - task: "Insurance Options Data Model"
     implemented: true
-    working: "NA" 
+    working: true 
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented MediShield Life basic plan vs Integrated Shield enhanced plan with accurate Singapore pricing, deductibles, co-payments, and coverage limits"
+      - working: true
+        agent: "testing"
+        comment: "Insurance options endpoint (/api/insurance-options) successfully returns both MediShield Life and Integrated Shield plans with correct pricing, deductibles, co-payments, and coverage limits. The data model accurately represents the differences between basic and enhanced plans."
 
   - task: "Game State & Decision System"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py" 
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Created session-based game state management allowing users to make decisions for both characters, track choices, and calculate financial outcomes"
+      - working: true
+        agent: "testing"
+        comment: "Game session management endpoints (/api/game/start and /api/game/{session_id}) successfully create and retrieve game states with unique session IDs. Decision making system (/api/game/decision) correctly records character insurance choices and updates the game state. Multiple concurrent sessions are handled properly with data isolation."
 
   - task: "Healthcare Scenarios & Outcome Calculation"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high" 
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Implemented realistic healthcare scenarios (appendectomy, cancer, broken arm) with accurate cost calculations showing insurance coverage differences"
+      - working: true
+        agent: "testing"
+        comment: "Healthcare scenarios endpoint (/api/scenarios) successfully returns all three scenarios with correct treatment costs. Outcome calculation endpoint (/api/game/calculate-outcome) correctly calculates financial impacts for all scenarios based on insurance choices. Calculations properly account for deductibles, co-payments, and coverage limits, showing significant differences between MediShield Life and Integrated Shield plans."
 
 frontend:
   - task: "Interactive Story UI with Chapters"
