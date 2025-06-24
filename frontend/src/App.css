@@ -70,14 +70,15 @@ body {
 }
 
 .app-header h1 {
-  font-size: 3rem;
-  font-weight: 800;
+  font-size: 3.5rem;
+  font-weight: 900;
   background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   animation: fadeInUp 1s ease-out;
+  letter-spacing: -2px;
 }
 
 .app-header p {
@@ -217,13 +218,29 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.image-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .story-image {
-  width: 350px;
-  height: 250px;
-  object-fit: cover;
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-image {
+  width: 350px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.secondary-image {
+  width: 350px;
+  height: 150px;
+  object-fit: cover;
+  opacity: 0.8;
 }
 
 .story-image:hover {
@@ -287,7 +304,7 @@ body {
 /* Characters Display */
 .characters-display {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
 }
@@ -328,6 +345,31 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
+.character-avatar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.avatar-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #667eea;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.character-badge {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
 .character-info h3 {
   font-size: 1.8rem;
   font-weight: 700;
@@ -353,10 +395,43 @@ body {
   font-size: 1.1rem;
 }
 
+/* Insurance Section Enhancements */
+.insurance-intro {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.insurance-hero-image {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.insurance-intro-text h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.insurance-intro-text p {
+  color: #4a5568;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
 /* Insurance Comparison */
 .insurance-comparison {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   gap: 3rem;
   margin-bottom: 3rem;
 }
@@ -369,6 +444,25 @@ body {
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
+}
+
+.insurance-visual {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.insurance-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.insurance-overlay {
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
 .insurance-card::before {
@@ -401,9 +495,6 @@ body {
 }
 
 .insurance-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 2rem;
 }
 
@@ -444,6 +535,13 @@ body {
   padding: 1.5rem;
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cost-info h4 {
+  margin-bottom: 1rem;
+  color: #2d3748;
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
 .cost-info p {
@@ -494,10 +592,143 @@ body {
   font-size: 1.2rem;
 }
 
+/* Cost Comparison Section */
+.cost-comparison-section {
+  margin: 3rem 0;
+}
+
+.comparison-visual {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-image {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.cost-breakdown {
+  flex: 1;
+}
+
+.cost-breakdown h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+}
+
+.cost-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cost-label {
+  width: 120px;
+  font-size: 0.9rem;
+  color: #4a5568;
+  font-weight: 600;
+}
+
+.cost-visual {
+  flex: 1;
+  height: 30px;
+  background: #e2e8f0;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 1rem;
+}
+
+.cost-fill {
+  height: 100%;
+  border-radius: 15px;
+  transition: width 1s ease;
+  position: relative;
+}
+
+.cost-fill.basic-plan {
+  background: linear-gradient(90deg, #48bb78, #38a169);
+}
+
+.cost-fill.enhanced-plan {
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.cost-fill.difference {
+  background: linear-gradient(90deg, #e53e3e, #c53030);
+}
+
+.cost-fill.insurance-fill {
+  background: linear-gradient(90deg, #48bb78, #38a169);
+}
+
+.cost-fill.pocket-fill {
+  background: linear-gradient(90deg, #e53e3e, #c53030);
+}
+
+.cost-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.cost-amount {
+  font-weight: 700;
+  color: #2d3748;
+}
+
+/* Decision Section Enhancements */
+.decision-intro {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.decision-hero-image {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.decision-intro-text h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.decision-intro-text p {
+  color: #4a5568;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
 /* Decision Section */
 .decision-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: 3rem;
   margin-bottom: 3rem;
 }
@@ -518,14 +749,42 @@ body {
 
 .character-profile {
   margin-bottom: 2rem;
-  text-align: center;
 }
 
-.character-profile h3 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #2d3748;
+.profile-image-container {
+  position: relative;
   margin-bottom: 1rem;
+}
+
+.profile-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.profile-overlay {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.profile-overlay h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.profile-details p {
+  color: #4a5568;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .insurance-choices h4 {
@@ -590,10 +849,24 @@ body {
   font-size: 1.1rem;
 }
 
+.choice-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+  font-weight: 400;
+}
+
 .choice-premium {
   color: #667eea;
   font-weight: 700;
   font-size: 1.1rem;
+  text-align: right;
+}
+
+.choice-annual {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 0.3rem;
 }
 
 /* Scenario Selection */
@@ -606,23 +879,42 @@ body {
   box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
 }
 
-.scenario-selection h3 {
+.scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.scenario-header-image {
+  width: 200px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.scenario-header-text h3 {
   font-size: 2rem;
   font-weight: 700;
   color: #2d3748;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.scenario-header-text p {
+  color: #4a5568;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 .scenario-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
 }
 
 .scenario-button {
-  padding: 2rem;
+  padding: 0;
   border: 3px solid #e2e8f0;
   border-radius: 20px;
   background: linear-gradient(135deg, #ffffff, #f8fafc);
@@ -631,6 +923,29 @@ body {
   text-align: left;
   position: relative;
   overflow: hidden;
+}
+
+.scenario-image-container {
+  position: relative;
+  width: 100%;
+  height: 180px;
+}
+
+.scenario-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 17px 17px 0 0;
+}
+
+.scenario-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.scenario-content {
+  padding: 1.5rem;
 }
 
 .scenario-button::before {
@@ -655,11 +970,6 @@ body {
   box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
 }
 
-.scenario-content {
-  position: relative;
-  z-index: 1;
-}
-
 .scenario-content h4 {
   font-size: 1.4rem;
   font-weight: 700;
@@ -682,7 +992,7 @@ body {
 .scenario-tags {
   display: flex;
   gap: 0.5rem;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .scenario-tag {
@@ -708,6 +1018,21 @@ body {
   color: #1a365d;
 }
 
+.scenario-tag.high {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.scenario-tag.medium {
+  background: #fef5e7;
+  color: #744210;
+}
+
+.scenario-tag.low {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
 /* Outcome Section */
 .outcome-section {
   display: flex;
@@ -724,6 +1049,29 @@ body {
   border-radius: 25px;
   border: 3px solid #e2e8f0;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.scenario-visual {
+  position: relative;
+}
+
+.scenario-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge.high {
+  background: #fed7d7;
+  color: #742a2a;
 }
 
 .scenario-info {
@@ -746,7 +1094,7 @@ body {
 
 .outcomes-comparison {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   gap: 3rem;
 }
 
@@ -758,6 +1106,22 @@ body {
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
+}
+
+.outcome-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.outcome-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #667eea;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 .outcome-card::before {
@@ -787,7 +1151,6 @@ body {
   font-size: 1.8rem;
   font-weight: 700;
   color: #2d3748;
-  margin-bottom: 2rem;
   position: relative;
   z-index: 1;
 }
@@ -845,72 +1208,7 @@ body {
 
 /* Cost Comparison Chart */
 .cost-comparison {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
   margin: 2rem 0;
-}
-
-.cost-breakdown {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.cost-breakdown h4 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #2d3748;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.cost-bar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.cost-label {
-  width: 120px;
-  font-size: 0.9rem;
-  color: #4a5568;
-  font-weight: 600;
-}
-
-.cost-visual {
-  flex: 1;
-  height: 30px;
-  background: #e2e8f0;
-  border-radius: 15px;
-  overflow: hidden;
-  position: relative;
-}
-
-.cost-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  border-radius: 15px;
-  transition: width 1s ease;
-  position: relative;
-}
-
-.cost-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 2s infinite;
-}
-
-.cost-amount {
-  margin-left: 1rem;
-  font-weight: 700;
-  color: #2d3748;
 }
 
 /* Moral Section */
@@ -925,6 +1223,25 @@ body {
   overflow: hidden;
 }
 
+.moral-visual {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.moral-image {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.moral-content {
+  flex: 1;
+}
+
 .moral-section::before {
   content: '💡';
   position: absolute;
@@ -934,21 +1251,32 @@ body {
   opacity: 0.3;
 }
 
-.moral-section h3 {
+.moral-content h3 {
   font-size: 2rem;
   font-weight: 700;
   color: #2d3748;
   margin-bottom: 1.5rem;
 }
 
-.moral-section p {
+.moral-content p {
   color: #4a5568;
   line-height: 1.8;
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
 }
 
-.moral-section p:last-child {
+.moral-content ul {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.moral-content li {
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.moral-content p:last-child {
   margin-bottom: 0;
 }
 
@@ -1037,6 +1365,12 @@ body {
   font-size: 1.1rem;
 }
 
+.game-brand {
+  margin-top: 1rem;
+  color: #667eea;
+  font-weight: 600;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .app-main {
@@ -1047,13 +1381,17 @@ body {
     padding: 2rem;
   }
   
-  .character-intro {
+  .character-intro, .insurance-intro, .decision-intro, .comparison-visual, .scenario-header, .moral-visual {
     flex-direction: column;
     text-align: center;
     gap: 2rem;
   }
   
-  .story-image {
+  .image-gallery {
+    align-items: center;
+  }
+  
+  .main-image, .secondary-image {
     width: 100%;
     max-width: 300px;
   }
@@ -1068,7 +1406,7 @@ body {
   }
   
   .app-header h1 {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
   
   .chapter-title {
@@ -1102,7 +1440,7 @@ body {
   }
   
   .app-header h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
   
   .chapter-title {
