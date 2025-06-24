@@ -31,6 +31,7 @@ class Character(BaseModel):
     age: int
     occupation: str
     current_health_status: str
+    lifestyle: str
     insurance_choice: Optional[str] = None
 
 class InsuranceOption(BaseModel):
@@ -63,6 +64,8 @@ class Scenario(BaseModel):
     medical_situation: str
     treatment_cost: float
     urgency_level: str  # "low", "medium", "high"
+    category: str  # "emergency", "routine", "preventive", "specialist"
+    age_relevance: str  # "high", "medium", "low"
     
 class DecisionCreate(BaseModel):
     session_id: str
@@ -85,7 +88,8 @@ INSURANCE_OPTIONS = [
             "Basic hospital coverage",
             "Subsidized ward coverage",
             "Emergency treatment",
-            "Day surgery procedures"
+            "Day surgery procedures",
+            "Basic specialist consultations"
         ]
     ),
     InsuranceOption(
@@ -101,7 +105,10 @@ INSURANCE_OPTIONS = [
             "Specialist consultations",
             "Advanced treatments",
             "Overseas emergency coverage",
-            "Cancer treatment coverage"
+            "Cancer treatment coverage",
+            "Mental health support",
+            "Dental & optical coverage",
+            "Maternity benefits"
         ]
     )
 ]
@@ -112,14 +119,16 @@ CHARACTERS_DATA = [
         name="Alex",
         age=25,
         occupation="Software Developer",
-        current_health_status="Generally healthy, occasional stress"
+        current_health_status="Generally healthy, occasional stress",
+        lifestyle="Sedentary work, exercises 2x weekly, healthy diet"
     ),
     Character(
         id="jamie",
         name="Jamie", 
         age=28,
         occupation="Marketing Executive",
-        current_health_status="Active lifestyle, family history of diabetes"
+        current_health_status="Active lifestyle, family history of diabetes",
+        lifestyle="Very active, plays sports regularly, social drinker"
     )
 ]
 
@@ -130,23 +139,99 @@ SCENARIOS = [
         description="Sudden severe abdominal pain requiring immediate surgery",
         medical_situation="Emergency appendix removal with 3 days hospital stay",
         treatment_cost=25000.0,
-        urgency_level="high"
+        urgency_level="high",
+        category="emergency",
+        age_relevance="high"
     ),
     Scenario(
         id="cancer_diagnosis",
-        title="Cancer Diagnosis",
+        title="Early Cancer Diagnosis",
         description="Routine check-up reveals early stage cancer requiring treatment",
-        medical_situation="Cancer treatment including chemotherapy and specialist care",
+        medical_situation="Cancer treatment including chemotherapy and specialist care over 6 months",
         treatment_cost=180000.0,
-        urgency_level="high"
+        urgency_level="high",
+        category="specialist",
+        age_relevance="medium"
     ),
     Scenario(
         id="broken_arm",
-        title="Broken Arm",
-        description="Accident results in fractured arm requiring surgery and physiotherapy",
-        medical_situation="Orthopedic surgery with follow-up treatment",
+        title="Sports Injury - Broken Arm",
+        description="Weekend basketball game results in fractured arm",
+        medical_situation="Orthopedic surgery with 3 months physiotherapy",
         treatment_cost=15000.0,
-        urgency_level="medium"
+        urgency_level="medium",
+        category="emergency",
+        age_relevance="high"
+    ),
+    Scenario(
+        id="dental_emergency",
+        title="Dental Emergency",
+        description="Severe tooth pain requires immediate root canal and crown",
+        medical_situation="Emergency dental treatment with follow-up procedures",
+        treatment_cost=3500.0,
+        urgency_level="medium",
+        category="routine",
+        age_relevance="high"
+    ),
+    Scenario(
+        id="mental_health",
+        title="Mental Health Support",
+        description="Work stress leads to anxiety requiring professional counseling",
+        medical_situation="6 months of therapy sessions with psychiatrist consultation",
+        treatment_cost=4800.0,
+        urgency_level="medium",
+        category="specialist",
+        age_relevance="high"
+    ),
+    Scenario(
+        id="maternity_care",
+        title="Maternity & Childbirth",
+        description="Pregnancy requires prenatal care and delivery",
+        medical_situation="Complete maternity package with specialist care",
+        treatment_cost=12000.0,
+        urgency_level="low",
+        category="routine",
+        age_relevance="high"
+    ),
+    Scenario(
+        id="eye_surgery",
+        title="LASIK Eye Surgery",
+        description="Corrective eye surgery to eliminate dependence on glasses",
+        medical_situation="Bilateral LASIK surgery with follow-up care",
+        treatment_cost=8000.0,
+        urgency_level="low",
+        category="routine",
+        age_relevance="medium"
+    ),
+    Scenario(
+        id="heart_condition",
+        title="Heart Condition Discovery",
+        description="Routine health screening reveals heart irregularity",
+        medical_situation="Cardiac tests, specialist consultation, and ongoing monitoring",
+        treatment_cost=35000.0,
+        urgency_level="high",
+        category="specialist",
+        age_relevance="medium"
+    ),
+    Scenario(
+        id="accident_injury",
+        title="Traffic Accident",
+        description="Minor traffic accident results in multiple injuries",
+        medical_situation="Emergency room treatment, X-rays, and physical therapy",
+        treatment_cost=8500.0,
+        urgency_level="high",
+        category="emergency",
+        age_relevance="high"
+    ),
+    Scenario(
+        id="chronic_condition",
+        title="Chronic Condition Diagnosis",
+        description="Diagnosed with chronic condition requiring ongoing treatment",
+        medical_situation="Long-term medication and regular specialist visits",
+        treatment_cost=18000.0,
+        urgency_level="medium",
+        category="specialist",
+        age_relevance="medium"
     )
 ]
 
@@ -166,6 +251,13 @@ async def get_characters():
 @api_router.get("/scenarios", response_model=List[Scenario])
 async def get_scenarios():
     return SCENARIOS
+
+@api_router.get("/scenarios/random/{count}")
+async def get_random_scenarios(count: int = 3):
+    import random
+    if count > len(SCENARIOS):
+        count = len(SCENARIOS)
+    return random.sample(SCENARIOS, count)
 
 @api_router.post("/game/start", response_model=GameState)
 async def start_game(game_data: GameStateCreate):
@@ -241,19 +333,60 @@ async def calculate_outcome(session_id: str, scenario_id: str):
                     excess_cost = scenario.treatment_cost - insurance.coverage_limit
                     total_out_of_pocket += excess_cost
                 
+                # Determine financial impact
+                if total_out_of_pocket < 2000:
+                    financial_impact = "Low"
+                elif total_out_of_pocket < 10000:
+                    financial_impact = "Medium"
+                else:
+                    financial_impact = "High"
+                
                 outcomes[character["id"]] = {
                     "character_name": character["name"],
                     "insurance_plan": insurance.name,
                     "total_treatment_cost": scenario.treatment_cost,
                     "out_of_pocket_cost": total_out_of_pocket,
                     "insurance_covered": scenario.treatment_cost - total_out_of_pocket,
-                    "financial_impact": "Low" if total_out_of_pocket < 5000 else "Medium" if total_out_of_pocket < 20000 else "High"
+                    "financial_impact": financial_impact,
+                    "monthly_premium": insurance.monthly_premium,
+                    "annual_premium": insurance.monthly_premium * 12
                 }
     
     return {
         "scenario": scenario.dict(),
         "outcomes": outcomes
     }
+
+@api_router.get("/stats/comparison")
+async def get_insurance_comparison_stats():
+    """Get detailed comparison statistics between insurance plans"""
+    basic_plan = INSURANCE_OPTIONS[0]
+    enhanced_plan = INSURANCE_OPTIONS[1]
+    
+    comparison_data = {
+        "basic_plan": {
+            "name": basic_plan.name,
+            "monthly_cost": basic_plan.monthly_premium,
+            "annual_cost": basic_plan.monthly_premium * 12,
+            "deductible": basic_plan.annual_deductible,
+            "copayment": basic_plan.copayment_percentage,
+            "coverage_limit": basic_plan.coverage_limit
+        },
+        "enhanced_plan": {
+            "name": enhanced_plan.name,
+            "monthly_cost": enhanced_plan.monthly_premium,
+            "annual_cost": enhanced_plan.monthly_premium * 12,
+            "deductible": enhanced_plan.annual_deductible,
+            "copayment": enhanced_plan.copayment_percentage,
+            "coverage_limit": enhanced_plan.coverage_limit
+        },
+        "cost_difference": {
+            "monthly": enhanced_plan.monthly_premium - basic_plan.monthly_premium,
+            "annual": (enhanced_plan.monthly_premium - basic_plan.monthly_premium) * 12
+        }
+    }
+    
+    return comparison_data
 
 # Include the router in the main app
 app.include_router(api_router)
